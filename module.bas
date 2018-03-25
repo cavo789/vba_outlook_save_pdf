@@ -16,14 +16,24 @@ Private Const cFolder As String = "C:\Christophe\Mails\PDF"
 
 Sub SaveAsPDFfile()
 
-	' Get all selected items
 	Dim MyOlNamespace As Outlook.NameSpace
+	Dim FSO As Object, TmpFolder As Object
+	Dim fdfs As FileDialogFilters
+	Dim fdf As FileDialogFilter
+	Dim wrdApp As Object
+	Dim wrdDoc As Object
+	Dim dlgSaveAs As FileDialog
+	Dim I As Integer
+	Dim msgFileName As String
+	Dim strCurrentFile As String
+	
+	' Get all selected items
 	Set MyOlNamespace = Application.GetNamespace("MAPI")
 	Set MyOlSelection = Application.ActiveExplorer.Selection
 
 	' Make sure at least one item is selected
 	If MyOlSelection.Count <> 1 Then
-		Response = MsgBox("Please select a single item", 
+		Response = MsgBox("Please select a single item", _
 			vbExclamation, "Save as PDF")
 		Exit Sub
 	End If
@@ -31,8 +41,7 @@ Sub SaveAsPDFfile()
 	' Retrieve the selected item
 	Set MySelectedItem = MyOlSelection.Item(1)
 
-	' Get the user's TempFolder to store the item in
-	Dim FSO As Object, TmpFolder As Object
+	' Get the user's TempFolder to store the item in	
 	Set FSO = CreateObject("scripting.filesystemobject")
 	Set tmpFileName = FSO.GetSpecialFolder(2)
 
@@ -44,8 +53,6 @@ Sub SaveAsPDFfile()
 	MySelectedItem.SaveAs tmpFileName, olMHTML
 
 	' Create a Word object
-	Dim wrdApp As Word.Application
-	Dim wrdDoc As Word.Document
 	Set wrdApp = CreateObject("Word.Application")
 
 	' Open the mht-file in Word without Word visible
@@ -53,29 +60,28 @@ Sub SaveAsPDFfile()
    
 	wrdApp.Visible = True
 
-	' Define the SafeAs dialog
-	Dim dlgSaveAs As FileDialog
+	' Define the SafeAs dialog	
 	Set dlgSaveAs = wrdApp.FileDialog(msoFileDialogSaveAs)
 
 	' Determine the FilterIndex for saving as a pdf-file
 	' Get all the filters
-	Dim fdfs As FileDialogFilters
-	Dim fdf As FileDialogFilter
 	Set fdfs = dlgSaveAs.Filters
 
-	' Loop through the Filters and exit when "pdf" is found
-	Dim I As Integer
+	' Loop through the Filters and exit when "pdf" is found	
 	I = 0
+	
 	For Each fdf In fdfs
 		I = I + 1
-		If InStr(1, fdf.Extensions, "pdf", vbTextCompare) > 0 Then Exit For
+		
+		If InStr(1, fdf.Extensions, "pdf", vbTextCompare) > 0 Then 
+			Exit For
+		End If		
 	Next fdf
 
 	' Set the FilterIndex to pdf-files
 	dlgSaveAs.FilterIndex = I
 
 	' Construct a safe file name from the message subject
-	Dim msgFileName As String
 	msgFileName = MySelectedItem.Subject
 
 	Set oRegEx = CreateObject("vbscript.regexp")
@@ -83,22 +89,22 @@ Sub SaveAsPDFfile()
 	oRegEx.Pattern = "[\\/:*?""<>|]"
 
 	' Add the received email date as prefix
-	msgFileName = Format(MySelectedItem.ReceivedTime, "yyyy-mm-dd_Hh-Nn") & "_" & Trim(oRegEx.Replace(msgFileName, ""))
+	msgFileName = Format(MySelectedItem.ReceivedTime, "yyyy-mm-dd_Hh-Nn") & _
+		"_" & Trim(oRegEx.Replace(msgFileName, ""))
 
 	' Set the initial location and file name for SaveAs dialog
-	Dim strCurrentFile As String
 	dlgSaveAs.InitialFileName = cFolder & "\" & msgFileName
 
 	' Show the SaveAs dialog and save the message as pdf
 	If dlgSaveAs.Show = -1 Then
-
 		strCurrentFile = dlgSaveAs.SelectedItems(1)
 
 		' Verify if pdf is selected
 		If Right(strCurrentFile, 4) <> ".pdf" Then
 	  
-			Response = MsgBox("Sorry, only saving in the pdf-format is supported." & _
-			vbNewLine & vbNewLine & "Save as pdf instead?", vbInformation + vbOKCancel)
+			Response = MsgBox("Sorry, only saving in the pdf-format " & _
+				"is supported." & vbNewLine & vbNewLine & _
+				"Save as pdf instead?", vbInformation + vbOKCancel)
 
 			If Response = vbCancel Then
 				wrdDoc.Close
@@ -112,16 +118,16 @@ Sub SaveAsPDFfile()
 				strCurrentFile = strCurrentFile & ".pdf"
 			End If
 					 
-	  End If
+		End If
 
-	' Save as pdf
-	wrdApp.ActiveDocument.ExportAsFixedFormat OutputFileName:= _
-		strCurrentFile, ExportFormat:= _
-		wdExportFormatPDF, OpenAfterExport:=False, OptimizeFor:= _
-		wdExportOptimizeForPrint, Range:=wdExportAllDocument, From:=0, To:=0, _
-		Item:=wdExportDocumentContent, IncludeDocProps:=True, KeepIRM:=True, _
-		CreateBookmarks:=wdExportCreateNoBookmarks, DocStructureTags:=True, _
-		BitmapMissingFonts:=True, UseISO19005_1:=False
+		' Save as pdf
+		wrdApp.ActiveDocument.ExportAsFixedFormat OutputFileName:= _
+			strCurrentFile, ExportFormat:= _
+			wdExportFormatPDF, OpenAfterExport:=False, OptimizeFor:= _
+			wdExportOptimizeForPrint, Range:=wdExportAllDocument, From:=0, To:=0, _
+			Item:=wdExportDocumentContent, IncludeDocProps:=True, KeepIRM:=True, _
+			CreateBookmarks:=wdExportCreateNoBookmarks, DocStructureTags:=True, _
+			BitmapMissingFonts:=True, UseISO19005_1:=False
 	End If
 
 	Set dlgSaveAs = Nothing
