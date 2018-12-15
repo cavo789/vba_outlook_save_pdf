@@ -1,12 +1,14 @@
 ![Banner](images/banner.jpg)
 
-# Outlook - Save selected email as PDF
+# Outlook - Save selected emails as PDF
 
-> Outlook macro to save a selected item in the pdf-format
+> Outlook macro to save emails in as pdf files on your disk
 
 ## Description
 
-Select an email from withing your Outlook client, click on a custom button of your ribbon and save the email in a specific folder of your hard disk.
+Select one or more emails from within your Outlook client, click on a custom button of your ribbon and save them in a specific folder of your hard disk.
+
+You can f.i. select 250 emails and in just a few clicks you can save them as pdf.
 
 ## Table of Contents
 
@@ -23,17 +25,16 @@ Get a copy of the `module.bas` VBA code and copy it into your Outlook client.
 - Close the VBE
 - Right-click on your Outlook ribbon to customize it so you can add a new button. Assign the `SaveAsPDFfile` subroutine to that button.
 
-Note :
+Note : you need to have Winword installed on your computer.
 
-- Requires Word 2007 SP2 or Word 2010
-- Requires a reference to "Microsoft Word <version> Object Library" (version is 12.0 or 14.0)
+## Usage
 
-To add them, in the VBE window, click on the `Tools` then `References`
+1. Select one or more emails
+2. Click on your `SaveAsPDFfile` button
+3. A few popups will be displayed asking you for instance where to store the emails (as pdf files) and if you want to delete emails once saved as pdf or not.
+4. That's it, wait a few and you'll get your mails saved on your disk.
 
-## Authors
-
-Original author : [Robert Sparnaaij](http://www.howto-outlook.com/howto/saveaspdf.htm)
-Modified by : Christophe Avonture
+![](images/demo.gif)
 
 ## License
 
