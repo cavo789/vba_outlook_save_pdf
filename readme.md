@@ -1,6 +1,6 @@
-![Banner](images/banner.jpg)
-
 # Outlook - Save selected emails as PDF
+
+![Banner](./banner.svg)
 
 > Outlook macro to save emails in as pdf files on your disk
 
