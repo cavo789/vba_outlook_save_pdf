@@ -129,7 +129,8 @@ Sub SaveAsPDFfile()
 
     Dim oSelection As Outlook.Selection
     Dim oMail As Outlook.MailItem
-    Dim objFSO As FileSystemObject
+    Dim objFso As Object
+    Set objFso = CreateObject("Scripting.FileSystemObject")
 
     ' Use late-bindings
     Dim objDoc As Object
