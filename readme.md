@@ -1,41 +1,51 @@
-# Outlook - Save selected emails as PDF
+# Enhanced Guide: Saving Selected Emails as PDFs in Outlook
 
-![Banner](./banner.svg)
+![Enhanced Banner](./banner.svg)
 
-> Outlook macro to save emails in as pdf files on your disk
+> Elevate your Outlook experience: seamlessly convert and save emails as PDFs directly to your disk with our macro.
 
-## Description
+## Overview
 
-Select one or more emails from within your Outlook client, click on a custom button of your ribbon and save them in a specific folder of your hard disk.
+Imagine effortlessly saving one or multiple emails from your Outlook inbox directly as PDFs with just a few clicks. This guide introduces a custom-built macro that integrates with your Outlook client, enabling you to save selected emails into a designated folder on your hard drive. Whether you're archiving important correspondence or organizing project-related emails, this tool simplifies the process, allowing for up to 250 emails to be saved as PDFs in a swift operation.
 
-You can f.i. select 250 emails and in just a few clicks you can save them as pdf.
+## Contents
 
-## Table of Contents
+- [Installation Guide](#"How-to-add-to-Outlook")
+- [How to Use](#usage)
+- [License Information](#license)
+- [Access the Code Directly!](https://raw.githubusercontent.com/cavo789/vba_outlook_save_pdf/master/module.bas)
 
-- [Install](#install)
-- [Usage](#usage)
-- [License](#license)
+## Installation Guide
 
-## Install
+Transform your Outlook into a powerful email-to-PDF converter in a few simple steps:
 
-Get a copy of the `module.bas` VBA code and copy it into your Outlook client.
+1. **Integrating the VBA Code**:
+   - Activate the Visual Basic Editor in Outlook by pressing `ALT-F11`.
+   - Navigate to Menu Bar -> Insert, then choose "Module" to create a new module.
+   - Obtain the `module.bas` script from [here](https://raw.githubusercontent.com/cavo789/vba_outlook_save_pdf/master/module.bas) and paste it into the newly created module.
+   - Exit the Visual Basic Editor.
 
-- Press `ALT-F11` in Outlook to open the `Visual Basic Editor` (aka VBE) window.
-- Create a new module and copy/paste the content of the `module.bas` file that you can found in this repository
-- Close the VBE
-- Right-click on your Outlook ribbon to customize it so you can add a new button. Assign the `SaveAsPDFfile` subroutine to that button.
+2. **Adding a Custom Button to the Ribbon**:
+   - Customize your Outlook Ribbon by right-clicking it and selecting `Customize The Ribbon`.
+   - In the "Choose commands from:" dropdown, select Macro.
+   - Add a `New Tab` (with a New Group within it) on the right side.
+   - Locate `Project1.SaveAsPDFfile` in the command list, select it, and hit the `Add` button.
+   - Confirm your changes by clicking OK.
 
-Note : you need to have Winword installed on your computer.
+3. **Customizing Your Ribbon** (Optional):
+   - Personalize the name of the new ribbon tab for easy access.
 
-## Usage
+**Prerequisite**: Ensure Microsoft Word is installed on your computer for the macro to function.
 
-1. Select one or more emails
-2. Click on your `SaveAsPDFfile` button
-3. A few popups will be displayed asking you for instance where to store the emails (as pdf files) and if you want to delete emails once saved as pdf or not.
-4. That's it, wait a few and you'll get your mails saved on your disk.
+## How to Use
 
-![](images/demo.gif)
+1. **Select the Emails**: Choose one or multiple emails you wish to save as PDFs.
+2. **Activate the Macro**: Click on the `SaveAsPDFfile` button on your custom ribbon.
+3. **Specify Save Location and Preferences**: Follow the prompts to select a destination folder for the PDFs and choose whether to delete the original emails post-conversion.
+4. **Completion**: Sit back and watch as your selected emails are transformed and saved as PDFs on your disk.
+
+![Demonstration](images/demo.gif)
 
 ## License
 
-[MIT](LICENSE)
+This tool is freely distributed under the [MIT License](LICENSE), promoting open and unrestricted use while encouraging contributions and modifications.
